@@ -29,6 +29,10 @@ prompt "Credential header value (e.g. Bearer: secretvalue)" CREDENTIAL_VALUE
 # Login to your Cloudflare account. Follow the link that will be printed.
 npx wrangler login --browser false
 
+# Create the worker in a directory that is not checked into git
+mkdir -p worker-instances
+cd worker-instances
+
 # Create a new worker project using the template
 # See: https://www.npmjs.com/package/create-cloudflare
 npm create cloudflare -- $WORKER_NAME \
