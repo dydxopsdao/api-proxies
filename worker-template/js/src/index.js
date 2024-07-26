@@ -19,6 +19,7 @@ export default {
 				{
 					method: request.method,
 					headers: {
+						"Accept": "application/json",
 						[env.CREDENTIAL_HEADER]: env.CREDENTIAL_VALUE,
 					}
 				}
