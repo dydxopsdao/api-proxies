@@ -8,6 +8,8 @@
 
 import { parseUri } from './parseUri.js';
 
+const METHODS_WITH_BODY = ["POST", "PUT", "PATCH"];
+
 export default {
 	async fetch(request, env, ctx) {
 		const requestUri = parseUri(request.url)
@@ -21,7 +23,8 @@ export default {
 					headers: {
 						"Accept": "application/json",
 						[env.CREDENTIAL_HEADER]: env.CREDENTIAL_VALUE,
-					}
+					},
+					body: METHODS_WITH_BODY.includes(request.method) ? await request.text() : undefined,
 				}
 			);
 
