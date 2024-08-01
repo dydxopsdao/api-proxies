@@ -13,15 +13,16 @@ export default {
     const requestUri = parseUri(request.url)
     const callUrl = `${env.API_ENDPOINT}${requestUri.relative}`
 
+    const callHeaders = new Headers(request.headers);
+    callHeaders.set(env.CREDENTIAL_HEADER, env.CREDENTIAL_VALUE);
+
     try {
+
       const apiResponse = await fetch(
         callUrl,
         {
           method: request.method,
-          headers: {
-            "Accept": "application/json",
-            [env.CREDENTIAL_HEADER]: env.CREDENTIAL_VALUE,
-          },
+          headers: callHeaders,
           body: METHODS_WITH_BODY.includes(request.method) ? await request.text() : undefined,
         }
       );
