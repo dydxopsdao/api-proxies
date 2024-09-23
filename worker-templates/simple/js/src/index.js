@@ -43,4 +43,4 @@ export default {
       return new Response("Error fetching from API", { status: 500 });
     }
   },
-};
+}

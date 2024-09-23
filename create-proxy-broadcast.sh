@@ -7,24 +7,28 @@
 set -e
 
 # Static path to the proxy worker template
-GITHUB_TEMPLATE_PATH=dydxopsdao/api-proxies/worker-template
+GITHUB_TEMPLATE_PATH=dydxopsdao/api-proxies/worker-templates/broadcast
 
 # Worker specification
 WORKER_NAME=interactive
-API_ENDPOINT=interactive
 CORS_ORIGIN=interactive
 CREDENTIAL_HEADER=interactive
-CREDENTIAL_VALUE=interactive
+API_ENDPOINT_1=interactive
+CREDENTIAL_VALUE_1=interactive
+API_ENDPOINT_2=interactive
+CREDENTIAL_VALUE_2=interactive
 
 function prompt {
   read -p "$1: " $2
 }
 
 prompt "Name of the worker (e.g.: my-proxy)" WORKER_NAME
-prompt "API endpoint (e.g. https://api.example.com)" API_ENDPOINT
 prompt "CORS origin (e.g. https://dydx.trade)" CORS_ORIGIN
 prompt "Credential header name (e.g. Authorization)" CREDENTIAL_HEADER
-prompt "Credential header value (e.g. Bearer: secretvalue)" CREDENTIAL_VALUE
+prompt "API endpoint #1 (e.g. https://api.example-1.com)" API_ENDPOINT_1
+prompt "Credential header value #1 (e.g. Bearer: secretValueOne)" CREDENTIAL_VALUE_1
+prompt "API endpoint #2 (e.g. https://api.example-2.com)" API_ENDPOINT_2
+prompt "Credential header value #2 (e.g. Bearer: secretValueTwo)" CREDENTIAL_VALUE_2
 
 # Login to your Cloudflare account. Follow the link that will be printed.
 npx wrangler login --browser false
@@ -47,11 +51,13 @@ cd $WORKER_NAME
 # Create the worker. You may be prompted to select a Cloudflare account.
 # See: https://developers.cloudflare.com/workers/wrangler/commands/#deploy
 npx wrangler deploy \
-  --var API_ENDPOINT:$API_ENDPOINT \
+  --var API_ENDPOINT_1:$API_ENDPOINT_1 \
+  --var API_ENDPOINT_2:$API_ENDPOINT_2 \
   --var CORS_ORIGIN:$CORS_ORIGIN \
   --var CREDENTIAL_HEADER:$CREDENTIAL_HEADER
 
-# Redeploy the worker with a secret
-echo $CREDENTIAL_VALUE | npx wrangler secret put CREDENTIAL_VALUE
+# Redeploy the worker with secrets
+echo $CREDENTIAL_VALUE_1 | npx wrangler secret put CREDENTIAL_VALUE_1
+echo $CREDENTIAL_VALUE_2 | npx wrangler secret put CREDENTIAL_VALUE_2
 
 echo "Worker created successfully!"
