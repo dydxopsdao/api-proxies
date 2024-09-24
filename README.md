@@ -8,7 +8,7 @@ A collection of API proxies to various third parties.
 
 ## Creating a proxy
 
-Use the interactive script: `create-proxy-worker.sh`.
+Use one of the interactive scripts: `create-proxy-simple.sh` or `create-proxy-broadcast.sh`.
 
 The script will prompt for configuration values, perform
 a browser-based login to CloudFlare, and deploy the worker.
