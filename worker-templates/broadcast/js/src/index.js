@@ -36,7 +36,13 @@ export default {
     // Return a response to the client
     return new Response(
       JSON.stringify({ responses }),
-      { headers: { "Content-Type": "application/json" } }
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": env.CORS_ORIGIN,
+          "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+        }
+      }
     );
   }
 };
