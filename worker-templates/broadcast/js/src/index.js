@@ -17,14 +17,14 @@ export default {
 
     // Determine which API endpoints to call
     const apiEndpointCandidates = [
-      { id: "endpoint-1", url: env.API_ENDPOINT_1, credential: env.CREDENTIAL_VALUE_1 },
-      { id: "endpoint-2", url: env.API_ENDPOINT_2, credential: env.CREDENTIAL_VALUE_2 },
+      { name: env.API_NAME_1, url: env.API_ENDPOINT_1, credential: env.CREDENTIAL_VALUE_1 },
+      { name: env.API_NAME_2, url: env.API_ENDPOINT_2, credential: env.CREDENTIAL_VALUE_2 },
     ];
     const apiEndpoints = apiEndpointCandidates.filter(candidate => candidate.url);
 
     // Call the API endpoints in parallel
     const responsePromises = apiEndpoints.map(endpoint => callEndpoint(
-      endpoint.id,
+      endpoint.name,
       endpoint.url,
       requestUri.relative,
       request.method,
@@ -48,7 +48,7 @@ export default {
   }
 };
 
-async function callEndpoint(endpointId, baseUrl, urlPath, method, body, credentialName, credentialValue) {
+async function callEndpoint(endpointName, baseUrl, urlPath, method, body, credentialName, credentialValue) {
   try {
     const callUrl = `${baseUrl}${urlPath}`;
 
@@ -66,13 +66,13 @@ async function callEndpoint(endpointId, baseUrl, urlPath, method, body, credenti
     );
 
     return {
-      endpoint: endpointId,
+      endpoint: endpointName,
       status: apiResponse.status,
       body: JSON.stringify(await apiResponse.json()),
     };
   } catch (error) {
     return {
-      endpoint: endpointId,
+      endpoint: endpointName,
       message: String(error),
     };
   }
