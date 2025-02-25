@@ -15,16 +15,25 @@ API_ENDPOINT=interactive
 CORS_ORIGIN=interactive
 CREDENTIAL_HEADER=interactive
 CREDENTIAL_VALUE=interactive
+CORS_ALLOW_HEADERS=interactive
 
 function prompt {
-  read -p "$1: " $2
+  local var_name=$2
+  read -p "$1 (default: $3): " input
+  # If input is empty, use the default value
+  if [ -z "$input" ]; then
+    eval $var_name="'$3'"
+  else
+    eval $var_name="'$input'"
+  fi
 }
 
-prompt "Name of the worker (e.g.: my-proxy)" WORKER_NAME
-prompt "API endpoint (e.g. https://api.example.com)" API_ENDPOINT
-prompt "CORS origin (e.g. https://dydx.trade)" CORS_ORIGIN
-prompt "Credential header name (e.g. Authorization)" CREDENTIAL_HEADER
-prompt "Credential header value (e.g. Bearer: secretvalue)" CREDENTIAL_VALUE
+prompt "Name of the worker" WORKER_NAME "example-proxy-web-mainnet"
+prompt "API endpoint" API_ENDPOINT "https://api.example.com"
+prompt "CORS origin" CORS_ORIGIN "https://dydx.trade"
+prompt "Credential header name" CREDENTIAL_HEADER "Authorization"
+prompt "Credential header value" CREDENTIAL_VALUE "Bearer secretvalue"
+prompt "CORS allowed headers" CORS_ALLOW_HEADERS "Content-Type, Accept, Accept-Language, Content-Language"
 
 # Login to your Cloudflare account. Follow the link that will be printed.
 npx wrangler login --browser false
@@ -49,7 +58,8 @@ cd $WORKER_NAME
 npx wrangler deploy \
   --var API_ENDPOINT:$API_ENDPOINT \
   --var CORS_ORIGIN:$CORS_ORIGIN \
-  --var CREDENTIAL_HEADER:$CREDENTIAL_HEADER
+  --var CREDENTIAL_HEADER:$CREDENTIAL_HEADER \
+  --var CORS_ALLOW_HEADERS:"$CORS_ALLOW_HEADERS"
 
 # Redeploy the worker with a secret
 echo $CREDENTIAL_VALUE | npx wrangler secret put CREDENTIAL_VALUE
