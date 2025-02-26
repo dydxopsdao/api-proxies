@@ -30,11 +30,11 @@ prompt "Credential header name (e.g. Authorization)" CREDENTIAL_HEADER
 echo
 prompt "Name of target API #1 (e.g. my-target-one)" API_NAME_1
 prompt "API endpoint #1 (e.g. https://api.example-1.com)" API_ENDPOINT_1
-prompt "Credential header value #1 (e.g. Bearer: secretValueOne)" CREDENTIAL_VALUE_1
+prompt "Credential header value #1 (e.g. Bearer secretValueOne)" CREDENTIAL_VALUE_1
 echo
 prompt "Name of target API #2 (e.g. my-target-two)" API_NAME_2
 prompt "API endpoint #2 (e.g. https://api.example-2.com)" API_ENDPOINT_2
-prompt "Credential header value #2 (e.g. Bearer: secretValueTwo)" CREDENTIAL_VALUE_2
+prompt "Credential header value #2 (e.g. Bearer secretValueTwo)" CREDENTIAL_VALUE_2
 
 # Login to your Cloudflare account. Follow the link that will be printed.
 npx wrangler login --browser false

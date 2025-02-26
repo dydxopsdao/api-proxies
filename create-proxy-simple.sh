@@ -24,7 +24,7 @@ prompt "Name of the worker (e.g.: my-proxy)" WORKER_NAME
 prompt "API endpoint (e.g. https://api.example.com)" API_ENDPOINT
 prompt "CORS origin (e.g. https://dydx.trade)" CORS_ORIGIN
 prompt "Credential header name (e.g. Authorization)" CREDENTIAL_HEADER
-prompt "Credential header value (e.g. Bearer: secretvalue)" CREDENTIAL_VALUE
+prompt "Credential header value (e.g. Bearer secretvalue)" CREDENTIAL_VALUE
 
 # Login to your Cloudflare account. Follow the link that will be printed.
 npx wrangler login --browser false
