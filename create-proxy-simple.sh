@@ -13,6 +13,7 @@ GITHUB_TEMPLATE_PATH=dydxopsdao/api-proxies/worker-templates/simple
 WORKER_NAME=interactive
 API_ENDPOINT=interactive
 CORS_ORIGIN=interactive
+CORS_ALLOW_HEADERS="Content-Type, Accept, Accept-Language, Content-Language"  # Default value
 CREDENTIAL_HEADER=interactive
 CREDENTIAL_VALUE=interactive
 
@@ -23,6 +24,7 @@ function prompt {
 prompt "Name of the worker (e.g.: my-proxy)" WORKER_NAME
 prompt "API endpoint (e.g. https://api.example.com)" API_ENDPOINT
 prompt "CORS origin (e.g. https://dydx.trade)" CORS_ORIGIN
+prompt "CORS allowed headers (default: ${CORS_ALLOW_HEADERS})" CORS_ALLOW_HEADERS
 prompt "Credential header name (e.g. Authorization)" CREDENTIAL_HEADER
 prompt "Credential header value (e.g. Bearer secretvalue)" CREDENTIAL_VALUE
 
@@ -49,6 +51,7 @@ cd $WORKER_NAME
 npx wrangler deploy \
   --var API_ENDPOINT:$API_ENDPOINT \
   --var CORS_ORIGIN:$CORS_ORIGIN \
+  --var CORS_ALLOW_HEADERS:$CORS_ALLOW_HEADERS \
   --var CREDENTIAL_HEADER:$CREDENTIAL_HEADER
 
 # Redeploy the worker with a secret
