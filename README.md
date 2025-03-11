@@ -14,4 +14,4 @@ The script will prompt for configuration values, perform
 a browser-based login to CloudFlare, and deploy the worker.
 
 Ensure accurate setup. For instance, to append `Authorization` header
-with value `Bearer: 123`, input the complete value including `Bearer: `.
+with value `Bearer 123`, input the complete value including `Bearer `.
